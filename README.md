@@ -1,47 +1,60 @@
-# 📧 Email Service Application
+# 📧 Email Service API
 
-A full-stack email service application built with **Django** that allows users to securely register, log in, send and receive emails, and manage their inbox through a clean and responsive web interface.
+A high-performance **Email Service REST API** built with **FastAPI** that enables users to register, authenticate, send and receive emails, and manage their inbox through secure, token-based authentication. The application follows RESTful principles and provides a scalable backend for email management.
 
 ## 🚀 Features
 
-* 🔐 Secure User Authentication (Registration, Login & Logout)
-* 📩 Send emails to registered users
-* 📥 Receive and view incoming emails
-* 📤 Sent Mail management
+* 🔐 User Registration & Authentication
+* 🔑 JWT-based Authentication
+* 📧 Send emails to registered users
+* 📥 Retrieve received emails (Inbox)
+* 📤 View sent emails
 * 🗑️ Delete emails
-* 👤 User-specific inbox and sent items
-* 📱 Responsive user interface
-* 🏗️ Built using Django's MVT (Model-View-Template) architecture
+* 👤 User-specific email management
+* ✅ Password hashing for secure credential storage
+* ⚡ FastAPI automatic interactive API documentation
+* 🛡️ Input validation using Pydantic models
+* 🗄️ SQLite database with SQLAlchemy ORM
 
 ## 🛠️ Tech Stack
 
-**Backend**
+### Backend
 
-* Django
+* FastAPI
 * Python
+* SQLAlchemy
+* Pydantic
+* Uvicorn
 
-**Database**
+### Database
 
 * SQLite
 
-**Frontend**
+### Authentication
 
-* HTML5
-* CSS3
-* JavaScript
+* JWT (JSON Web Tokens)
+* Password Hashing (Passlib/Bcrypt)
 
 ## 📂 Project Structure
 
-```
+```text
 email_service/
-│── email_service/      # Project settings
-│── mail/               # Main application
-│── templates/          # HTML templates
-│── static/             # CSS, JavaScript, Images
-│── db.sqlite3          # SQLite database
-│── manage.py
-└── README.md
+│── app/
+│   ├── api/
+│   ├── models/
+│   ├── schemas/
+│   ├── database/
+│   ├── services/
+│   ├── utils/
+│   ├── auth/
+│   └── main.py
+│
+├── requirements.txt
+├── README.md
+└── .env
 ```
+
+> *The structure above is an example. Adjust it if your project uses different folder names.*
 
 ## ⚙️ Installation
 
@@ -61,7 +74,7 @@ python -m venv venv
 venv\Scripts\activate
 ```
 
-**Linux / macOS**
+**Linux/macOS**
 
 ```bash
 python3 -m venv venv
@@ -74,69 +87,97 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Apply migrations
+### 4. Configure environment variables
+
+Create a `.env` file and add the required configuration.
+
+Example:
+
+```env
+SECRET_KEY=your_secret_key
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+DATABASE_URL=sqlite:///./email.db
+```
+
+### 5. Run the application
 
 ```bash
-python manage.py migrate
+uvicorn app.main:app --reload
 ```
 
-### 5. Create a superuser (Optional)
-
-```bash
-python manage.py createsuperuser
-```
-
-### 6. Run the development server
-
-```bash
-python manage.py runserver
-```
-
-Open your browser and visit:
+The API will be available at:
 
 ```
-http://127.0.0.1:8000/
+http://127.0.0.1:8000
 ```
+
+## 📖 API Documentation
+
+FastAPI automatically generates interactive API documentation.
+
+* **Swagger UI**
+
+  ```
+  http://127.0.0.1:8000/docs
+  ```
+
+* **ReDoc**
+
+  ```
+  http://127.0.0.1:8000/redoc
+  ```
+
+## 📌 Main API Endpoints
+
+| Method | Endpoint        | Description                        |
+| ------ | --------------- | ---------------------------------- |
+| POST   | `/register`     | Register a new user                |
+| POST   | `/login`        | Authenticate user and generate JWT |
+| POST   | `/emails/send`  | Send an email                      |
+| GET    | `/emails/inbox` | View inbox                         |
+| GET    | `/emails/sent`  | View sent emails                   |
+| GET    | `/emails/{id}`  | Get email details                  |
+| DELETE | `/emails/{id}`  | Delete an email                    |
+
+> Update the endpoints above if your API uses different routes.
 
 ## 📸 Screenshots
 
 Add screenshots of:
 
-* Home Page
-* Login Page
-* Registration Page
+* Swagger UI (`/docs`)
+* User Registration
+* Login
+* Send Email
 * Inbox
-* Compose Email
 * Sent Emails
-* Email Details
 
 ## 🎯 Learning Outcomes
 
 This project demonstrates:
 
-* Django MVT Architecture
-* Authentication & Authorization
+* FastAPI framework
+* REST API development
+* JWT Authentication
+* Password Hashing
+* SQLAlchemy ORM
+* SQLite database integration
+* Pydantic validation
+* Dependency Injection
 * CRUD Operations
-* Database Management with SQLite
-* Form Handling & Validation
-* Template Rendering
-* Static File Management
-* Responsive Web Design
+* API documentation with Swagger
 
 ## 🔮 Future Improvements
 
-* Email search functionality
-* Rich text editor
-* Attachments support
-* Email notifications
+* Email attachments
+* Search and filtering
 * Pagination
-* Password reset via email
-* Dark mode
-* REST API integration
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to fork the repository, create a feature branch, and submit a pull request.
+* Email notifications
+* Refresh tokens
+* Role-based access control
+* PostgreSQL support
+* Docker deployment
 
 ## 📄 License
 
